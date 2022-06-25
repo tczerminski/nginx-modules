@@ -1,8 +1,22 @@
-version: "3.3"
+version: "3.9"
+
 services:
-  web:
+  nginx:
     build:
       context: ./nginx
     image: nginx-auth-request
     ports:
-      - "80:8080"
+      - "80:80"
+  vouch:
+    image: quay.io/vouch/vouch-proxy
+    hostname: vouch
+    environment:
+      - VOUCH_DOMAINS=${VOUCH_DOMAINS}
+      - OAUTH_PROVIDER=${OAUTH_PROVIDER}
+      - OAUTH_CLIENT_ID=${OAUTH_CLIENT_ID}
+      - OAUTH_CLIENT_SECRET=${OAUTH_CLIENT_SECRET}
+      - OAUTH_CALLBACK_URL=${OAUTH_CALLBACK_URL}
+      - VOUCH_COOKIE_SECURE=${VOUCH_COOKIE_SECURE}
+  apache:
+    image: httpd
+    hostname: apache

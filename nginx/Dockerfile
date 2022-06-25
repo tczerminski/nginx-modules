@@ -1,12 +1,10 @@
 FROM nginx:1.23.0
 
 COPY nginx.conf /etc/nginx/nginx.conf
-COPY claim-verifier.js /etc/nginx/claim-verifier.js
 
 RUN set -ex; \
     apt-get update; \
-    apt-get install -y wget build-essential git libpcre3-dev libssl-dev libxslt-dev zlib1g-dev mercurial; \
-    hg clone https://hg.nginx.org/njs && \
+    apt-get install -y wget build-essential git libpcre3-dev libssl-dev libxslt-dev zlib1g-dev; \
     wget -q https://nginx.org/download/nginx-1.23.0.tar.gz; \
     git clone https://github.com/perusio/nginx-auth-request-module; \
     tar -xzvf nginx-1.23.0.tar.gz; \
@@ -38,8 +36,7 @@ RUN set -ex; \
     --with-http_xslt_module  \
     --with-mail  \
     --with-mail_ssl_module  \
-    --add-module=../nginx-auth-request-module  \
-    --add-module=../njs/nginx; \
+    --add-module=../nginx-auth-request-module && \
     make && make install; \
     cd ..; \
     rm -rf nginx*;
