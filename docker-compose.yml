@@ -6,7 +6,7 @@ services:
       context: ./nginx
     image: nginx-auth-request
     ports:
-      - "80:80"
+      - "8080:8080"
     environment:
       - REQUIRED_USERNAME=${REQUIRED_USERNAME}
   vouch:
