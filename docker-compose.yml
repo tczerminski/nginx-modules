@@ -7,6 +7,8 @@ services:
     image: nginx-auth-request
     ports:
       - "80:80"
+    environment:
+      - REQUIRED_USERNAME=${REQUIRED_USERNAME}
   vouch:
     image: quay.io/vouch/vouch-proxy
     hostname: vouch
@@ -17,6 +19,9 @@ services:
       - OAUTH_CLIENT_SECRET=${OAUTH_CLIENT_SECRET}
       - OAUTH_CALLBACK_URL=${OAUTH_CALLBACK_URL}
       - VOUCH_COOKIE_SECURE=${VOUCH_COOKIE_SECURE}
+      - VOUCH_JWT_COMPRESS=${VOUCH_JWT_COMPRESS}
+      - VOUCH_TESTING=${VOUCH_TESTING}
+      - VOUCH_LOGLEVEL=${VOUCH_LOGLEVEL}
   apache:
     image: httpd
     hostname: apache
